@@ -43,11 +43,9 @@ Product.init(
   },
   {
     // add Category model association 
-  include: [{
-association: Product.category_id,
-include: [Category.id]
-
-  }]
+  include: [
+    {Model: Category, as: 'category_id'},
+  ]
   },
   {
     sequelize,
