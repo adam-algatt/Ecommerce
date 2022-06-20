@@ -1,10 +1,7 @@
-const {
-  Model,
-  DataTypes
-} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
-const Category = require('./Category');
+
 
 class ProductTag extends Model {}
 
@@ -16,15 +13,24 @@ ProductTag.init({
     primaryKey: true,
     autoIncrement: true
   },
+  product_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'product',
+      key: 'id'
+    }
+  },
   tag_id: {
     type: DataTypes.INTEGER,
-  },
-}, {
-  // add Category model association 
-  include: [
-   { model: Category},
-  ]
-}, {
+    allowNull: true,
+    references: {
+      model: 'tag',
+      key: 'id'
+    }
+  }
+},
+ {
   sequelize,
   timestamps: false,
   freezeTableName: true,

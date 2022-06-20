@@ -1,12 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
 
-const sequelize = require('../config/connection.js');
+const sequelize = require('../config/connection');
 
 class Tag extends Model {}
 
 Tag.init(
-  {
-    // define columns
+  { 
 id: {
   type: DataTypes.INTEGER,
   allowNull: false,
@@ -26,10 +25,4 @@ tag_name: {
   }
 );
 
-
-
 module.exports = Tag;
-
-
-
-// Stopped at product tag in module 

@@ -32,12 +32,18 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     }, 
+      // associated Product data
     include: {
       model: Product
     }
   })
-  // be sure to include its associated Product data
+  .then(dbTagData => res.json(dbTagData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err)
+  })
 });
+
 
 router.post('/', (req, res) => {
   // create a new tag
@@ -52,8 +58,8 @@ tag_name: $.tag_name
   })
 });
 
-router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+router.put('/:id', (req, res) => {
   let $ = req.params;
   Tag.update({
     where: {
@@ -67,8 +73,8 @@ router.put('/:id', (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
+router.delete('/:id', (req, res) => {
   Tag.destroy({
     where: {
       id: req.params.id

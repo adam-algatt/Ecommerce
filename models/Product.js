@@ -1,12 +1,6 @@
-// import important parts of sequelize library
-const { INTERACTIVE } = require('mysql2/lib/constants/client');
-const { INTEGER } = require('sequelize');
-const { DECIMAL } = require('sequelize');
-const { STRING } = require('sequelize');
 const { Model, DataTypes } = require('sequelize');
-// import our database connection from config.js
+
 const sequelize = require('../config/connection');
-const Category = require('./Category');
 
 // Initialize Product model (table) by extending off Sequelize's Model class
 class Product extends Model {}
@@ -28,24 +22,27 @@ Product.init(
     price: {
       type: DataTypes.DECIMAL(10,2),
       allowNull: false,
-      isDecimal: true
+      validate: { 
+        isDecimal: true
+      }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 10,
+      validate: {
       isNumeric: true
+      }
     },
     //Ref Category Model
     category_id: {
     type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'category',
+      key: 'id'
     }
-  },
-  {
-    // add Category model association 
-  include: [
-    {Model: Category, as: 'category_id'},
-  ]
+    }
   },
   {
     sequelize,
